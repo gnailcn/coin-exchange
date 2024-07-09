@@ -1,0 +1,76 @@
+server:
+  port: 80
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    nacos:
+      discovery:
+#        server-addr: nacos-server:8848
+        server-addr: nacos-server:8848  # host文件中定义
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 启用gateway 服务发现功能
+          lower-case-service-id: true  # 启用小驼峰的服务名称访问服务
+      routes: # 自定义路由机制
+        - id: admin-service_router   # /admin/**--->admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+        - id: test_router
+          uri: https://www.zhihu.com/
+          predicates:
+            - Path=/hot
+
+#        - id: member-service-router  # /member/**--->member-service
+#          uri: lb://member-service
+#          predicates:
+#            -Path = member/**
+#        - id: finance-service-router  # /finance/**--->finance-service
+#          uri: lb://finance-service
+#          predicates:
+#            - Path = finance/**
+#        - id: chan-service-router    # /chan/**--->chan-service
+#          uri: lb://chan-service
+#          predicates:
+#            - Path = chan/**
+#        - id: statistics-service-router # /statistics/**--->statistics-service
+#          uri: lb://statistics-service
+#          predicates:
+#            - Path=statistics/**
+#        - id: match-service-router   # /match/**--->match-service
+#          uri: lb://match-service
+#          predicates:
+#            - Path=match/**
+#        - id: exchange-service-router  # /exchange/**--->exchange-service
+#          uri: lb://exchange-service
+#          predicates:
+#            - Path=match/**
+    sentinel:
+      filter:
+        enabled: true
+      transport:
+        dashboard: sentinel-server:8858
+      datasource:
+
+#        ds1.file:
+#          file: classpath:router-flow.json
+#          ruleType: gw_flow  # 限流策略
+        # 注意：使用nacos持久化sentinel数据时，需要添加nacos-datasource的依赖
+        ds1.nacos:
+          serverAddr: nacos-server:8848
+          dataId: gw-flow
+          ruleType: gw_flow   # 限流策略
+#        ds2.file:
+#          file: classpath:api-flow.json #api-flow.json 接口的分组
+#          ruleType: gw_api_group   # API分组
+        ds2.nacos:
+          serverAddr: nacos-server:8848
+          dataId: api-group
+          ruleType: gw_api_group    # API分组
+  redis:
+    host: redis-server
+    port: 6380
+    password: 12345678
+
