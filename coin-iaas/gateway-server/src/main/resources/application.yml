@@ -18,6 +18,8 @@ spring:
           uri: lb://admin-service
           predicates:
             - Path=/admin/**
+          filters:
+            - StripPrefix=1  # 当前端访问/admin/login -> login, 将/admin去掉
         - id: test_router
           uri: https://www.zhihu.com/
           predicates:
