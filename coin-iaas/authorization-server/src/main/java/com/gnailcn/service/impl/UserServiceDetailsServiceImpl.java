@@ -41,7 +41,7 @@ public class UserServiceDetailsServiceImpl implements UserDetailsService {
         UserDetails userDetails = null;
         try{
             String grantType = requestAttributes.getRequest().getParameter("grant_type");   //refresh_token进行纠正
-            if(LoginConstant.REFRSH_TYPE.equals(grantType.toUpperCase())){
+            if(LoginConstant.REFRESH_TYPE.equals(grantType.toUpperCase())){
                 username = adjustUsername(username, loginType);
             }
             switch (loginType) {
@@ -147,7 +147,4 @@ public class UserServiceDetailsServiceImpl implements UserDetailsService {
             }
         }, username, username);
     }
-
-
-
 }

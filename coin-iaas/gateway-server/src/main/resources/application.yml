@@ -14,21 +14,25 @@ spring:
           enabled: true  # 启用gateway 服务发现功能
           lower-case-service-id: true  # 启用小驼峰的服务名称访问服务
       routes: # 自定义路由机制
+        - id: test_router
+          uri: https://www.zhihu.com/
+          predicates:
+            - Path=/hot
+
         - id: admin-service_router   # /admin/**--->admin-service
           uri: lb://admin-service
           predicates:
             - Path=/admin/**
           filters:
             - StripPrefix=1  # 当前端访问/admin/login -> login, 将/admin去掉
-        - id: test_router
-          uri: https://www.zhihu.com/
-          predicates:
-            - Path=/hot
 
-#        - id: member-service-router  # /member/**--->member-service
-#          uri: lb://member-service
-#          predicates:
-#            -Path = member/**
+        - id: member-service-router  # /member/**--->member-service
+          uri: lb://member-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1  # 当前端访问/admin/login -> login, 将/admin去掉
+
 #        - id: finance-service-router  # /finance/**--->finance-service
 #          uri: lb://finance-service
 #          predicates:

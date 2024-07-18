@@ -48,7 +48,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("client_credentials")
                 .scopes("all")
                 .accessTokenValiditySeconds(7*24*3600);
-
         super.configure(clients);
     }
 

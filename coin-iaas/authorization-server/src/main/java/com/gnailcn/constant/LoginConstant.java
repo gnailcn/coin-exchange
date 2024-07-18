@@ -29,7 +29,7 @@ public class LoginConstant {
     //查询会员信息
     public static final String QUERY_MEMBER_SQL = "SELECT `id`,`password`, `status` FROM `user` WHERE mobile = ? or email = ? ";
 
-    public static final String REFRSH_TYPE = "REFRESH_TOKEN";
+    public static final String REFRESH_TYPE = "REFRESH_TOKEN";
 
     /**
      * 使用管理员用户的id 查询用户名称

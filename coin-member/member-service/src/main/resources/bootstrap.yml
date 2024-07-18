@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: member-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: nacos-server:8848
+      config:
+        file-extension: yaml
+#      去 nacos-server 里面拉取 member-service-dev.yaml
+
+
+identify:
+  url: https://idcert.market.alicloudapi.com/idcard?idCard=%s&name=%s
+  appKey: 203866940
+  appSecret: KF6LRDKejSejx2vfyLqiLP7bVvWOZYCp
+  appCode: 39e89acacec14a9d80782d8aa2893295
