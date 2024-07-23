@@ -321,8 +321,8 @@ public class UserController implements UserServiceFeign {
      * @return
      */
     @Override
-    public List<UserDto> getBasicUsers(List<Long> ids) {
-        List<UserDto> userDtos = userService.getBasicUsers(ids);
+    public Map<Long, UserDto> getBasicUsers(List<Long> ids, String userName, String mobile) {
+        Map<Long, UserDto> userDtos = userService.getBasicUsers(ids, userName, mobile);
         return userDtos;
     }
 

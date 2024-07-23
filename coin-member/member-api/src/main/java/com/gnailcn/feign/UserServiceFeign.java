@@ -16,12 +16,14 @@ public interface UserServiceFeign {
      * @param ids
      * @return
      */
-    List<UserDto>  getBasicUsers(@RequestParam("ids") List<Long> ids) ;
-//      Map<Long,UserDto> Long:userId,UserDto 用户的基础信息
 //    @GetMapping("/basic/users")
-//    Map<Long, UserDto> getBasicUsers(
-//            @RequestParam(value = "ids",required = false) List<Long> ids,
-//            @RequestParam(value = "userName",required = false) String userName ,
-//            @RequestParam(value = "mobile",required = false) String mobile
-//    );
+//    List<UserDto>  getBasicUsers(@RequestParam("ids") List<Long> ids) ;
+
+    //Long 用户的id, UserDto 用户的基础信息
+    @GetMapping("/basic/users")
+    Map<Long, UserDto> getBasicUsers(
+            @RequestParam(value = "ids",required = false) List<Long> ids,
+            @RequestParam(value = "userName",required = false) String userName ,
+            @RequestParam(value = "mobile",required = false) String mobile
+    );
 }

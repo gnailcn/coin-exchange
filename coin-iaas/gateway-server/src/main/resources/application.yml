@@ -33,10 +33,13 @@ spring:
           filters:
             - StripPrefix=1  # 当前端访问/admin/login -> login, 将/admin去掉
 
-#        - id: finance-service-router  # /finance/**--->finance-service
-#          uri: lb://finance-service
-#          predicates:
-#            - Path = finance/**
+        - id: finance-service-router  # /finance/**--->finance-service
+          uri: lb://finance-service
+          predicates:
+            - Path=/finance/**
+          filters:
+            - StripPrefix=1   # 当钱端到端访问/finance/xxx -> xxx, 将/finance去掉
+
 #        - id: chan-service-router    # /chan/**--->chan-service
 #          uri: lb://chan-service
 #          predicates:
