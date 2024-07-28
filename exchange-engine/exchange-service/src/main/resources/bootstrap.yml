@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: exchange-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: nacos-server:8848
+      config:
+        file-extension: yaml
+#      去 nacos-server 里面拉取 exchange-service-dev.yaml
+    stream:
+      rocketmq:
+        binder:
+          name-server: rocket-server:9876
+        binders:
+          order_out: {consumer.orderly: true}
+      bindings:
+        order_out: {destination: order_in, content-type: application/plain}

@@ -1,8 +1,10 @@
 package com.gnailcn.controller;
 
 import com.gnailcn.domain.Account;
+import com.gnailcn.feign.AccountServiceFeign;
 import com.gnailcn.model.R;
 import com.gnailcn.service.AccountService;
+import com.gnailcn.vo.UserTotalAccountVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/account")
 @Api(tags = "资产服务的控制器")
-public class AccountController {
+public class AccountController implements AccountServiceFeign {
     @Autowired
     private AccountService accountService ;
 
@@ -30,5 +34,58 @@ public class AccountController {
         Long userId = Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString()) ;
         Account account = accountService.findByUserAndCoin(userId,coinName) ;
         return R.ok(account);
+    }
+
+    @GetMapping("/total")
+    @ApiOperation(value = "计算用户的总资产")
+    public R<UserTotalAccountVo> total() {
+        Long userId = Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        UserTotalAccountVo userTotalAccountVo = accountService.getUserTotalAccount(userId);
+        return R.ok(userTotalAccountVo);
+    }
+
+    /**
+     * 锁定用户的余额
+     *
+     * @param userId  用户的id
+     * @param coinId  币种的id
+     * @param mum     锁定的数量
+     * @param type    业务类型
+     * @param orderId 订单编号
+     * @param fee     手续费
+     */
+    @Override
+    public void lockUserAmount(Long userId, Long coinId, BigDecimal mum, String type, Long orderId, BigDecimal fee) {
+        accountService.lockUserAmount(userId,coinId,mum,type,orderId,fee);
+    }
+
+    /**
+     * 划转买入的账户余额
+     *
+     * @param fromUserId
+     * @param toUserId
+     * @param coinId
+     * @param amount
+     * @param businessType
+     * @param orderId
+     */
+    @Override
+    public void transferBuyAmount(Long fromUserId, Long toUserId, Long coinId, BigDecimal amount, String businessType, Long orderId) {
+        accountService.transferBuyAmount(fromUserId, toUserId, coinId, amount, businessType, orderId);
+    }
+
+    /**
+     * 划转出售的成功的账户余额
+     *
+     * @param fromUserId
+     * @param toUserId
+     * @param coinId
+     * @param amount
+     * @param businessType
+     * @param orderId
+     */
+    @Override
+    public void transferSellAmount(Long fromUserId, Long toUserId, Long coinId, BigDecimal amount, String businessType, Long orderId) {
+        accountService.transferSellAmount(fromUserId, toUserId, coinId, amount, businessType, orderId);
     }
 }

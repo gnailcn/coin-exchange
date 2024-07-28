@@ -11,6 +11,15 @@
 
     <artifactId>finance-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.gnailcn</groupId>
+            <artifactId>coin-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

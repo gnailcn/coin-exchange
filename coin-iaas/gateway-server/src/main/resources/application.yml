@@ -52,10 +52,13 @@ spring:
 #          uri: lb://match-service
 #          predicates:
 #            - Path=match/**
-#        - id: exchange-service-router  # /exchange/**--->exchange-service
-#          uri: lb://exchange-service
-#          predicates:
-#            - Path=match/**
+        - id: exchange-service-router  # /exchange/**--->exchange-service
+          uri: lb://exchange-service
+          predicates:
+            - Path=/exchange/**
+          filters:
+            - StripPrefix=1   # 当钱端到端访问/exchange/xxx -> xxx, 将/exchange去掉
+
     sentinel:
       filter:
         enabled: true

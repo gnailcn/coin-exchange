@@ -28,6 +28,25 @@
             <artifactId>coin-common</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.gnailcn</groupId>
+            <artifactId>finance-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
